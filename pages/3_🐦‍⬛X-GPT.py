@@ -4,13 +4,14 @@ import os
 from apikey import apikey 
 
 import streamlit as st 
-from langchain.llms import GooglePalm
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.utilities import WikipediaAPIWrapper 
 
 os.environ['GOOGLE_API_KEY'] = apikey
+llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.9)
 
 # App framework
 st.title('🐦‍⬛Twitter/X GPT')
@@ -39,7 +40,6 @@ hashtag_memory = ConversationBufferMemory(input_key='title', memory_key='chat_hi
 
 
 # Llms
-llm = GooglePalm(temperature=0.6) 
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
 Threads_chain = LLMChain(llm=llm, prompt=Threads_template, verbose=True, output_key='script', memory=Threads_memory)
 hashtag_chain = LLMChain(llm=llm, prompt=hashtag_template, verbose=True, output_key='script', memory=hashtag_memory)
