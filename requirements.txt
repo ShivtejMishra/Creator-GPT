@@ -3,3 +3,4 @@ langchain
 google-generativeai
 chromadb
 wikipedia
+langchain_google_genai
