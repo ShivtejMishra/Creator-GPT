@@ -4,13 +4,14 @@ import os
 from apikey import apikey 
 
 import streamlit as st 
-from langchain.llms import GooglePalm
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.utilities import WikipediaAPIWrapper 
 
 os.environ['GOOGLE_API_KEY'] = apikey
+llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.9)
 
 # App framework
 st.title('🦜🔗 👉 Youtube GPT')
@@ -34,7 +35,6 @@ script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_his
 
 
 # Llms
-llm = GooglePalm(temperature=0.6) 
 title_chain = LLMChain(llm=llm, prompt=title_template, verbose=True, output_key='title', memory=title_memory)
 script_chain = LLMChain(llm=llm, prompt=script_template, verbose=True, output_key='script', memory=script_memory)
 
